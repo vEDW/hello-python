@@ -15,7 +15,11 @@ def hello():
 	<html>
 	<body bgcolor="{}">
 
-	<center><h1><font color="white">Hi, I'm GUID:<br/>
+	<center><h1><font color="white">Welcome to LCM App !<br/>
+	</center>
+
+
+	<center><h1><font color="white">I'm GUID:<br/>
 	{}
 	</center>
 
