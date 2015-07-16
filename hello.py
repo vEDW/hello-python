@@ -16,9 +16,7 @@ GREEN = "#33CC33"
 
 COLOR = BLUE
 
-#if r_server.exists('counter') is False:
-r_server.set('counter',1)
-
+r_server.set('counter',0)
 
 @app.route('/')
 def hello():
