@@ -9,6 +9,10 @@ credentials = rediscloud_service['credentials']
 r_server = redis.Redis(host=credentials['hostname'], port=credentials['port'], password=credentials['password'])
 
 from flask import Flask
+
+from flask import request
+from flask import jsonify
+
 app = Flask(__name__)
 my_uuid = str(uuid.uuid1())
 BLUE = "#0099FF"
@@ -16,19 +20,21 @@ GREEN = "#33CC33"
 
 COLOR = BLUE
 
-r_server.set('counter',0)
-
 @app.route('/')
 def hello():
 	global r_server
 	r_server.incr('counter')
+	if request.headers.getlist("X-Forwarded-For"):
+   		ipaddress = request.headers.getlist("X-Forwarded-For")[0]
+	else:
+   		ipaddress = request.remote_addr
+
 	return """
 	<html>
 	<body bgcolor="{}">
 
 	<center><h1><font color="white">Welcome to Redis App !<br/>
 	</center>
-
 
 	<center><h1><font color="white">I'm GUID:<br/>
 	{}
@@ -38,11 +44,13 @@ def hello():
 	{}
 	</center>
 
-
+	<center><h1><font color="white">Your IP :<br/>
+	{}
+	</center>
 
 	</body>
 	</html>
-	""".format(COLOR,my_uuid,r_server.get('counter'))
+	""".format(COLOR,my_uuid,r_server.get('counter'),ipaddress)
 
 if __name__ == "__main__":
 	app.run(host='0.0.0.0', port=int(os.getenv('VCAP_APP_PORT', '5000')))
