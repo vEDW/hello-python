@@ -2,8 +2,7 @@ language: python
 script: 'true'
 deploy:
   edge: true
-  provider:
-    provider: cloudfoundry
+  provider: cloudfoundry
   api: https://api.run.pivotal.io
   username: eric.dewitte@emc.com
   password:
