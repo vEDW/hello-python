@@ -1,7 +1,7 @@
 deploy:
   provider:
     provider: cloudfoundry
-  api: https://api.172.18.13.79.xip.io
+  api: https://api.run.pivotal.io
   username: eric.dewitte@emc.com
   password:
     secure: L0u4Qo3numKu8nAFEtXzFPp/nziX2A5thvCk3UFTS0x0IvZ/E3EgKnujB/LL5f5JFe7Aak0pUsABg3DSD//W5JtNcPHDlJJCwxhUZwWeBsmEUZQYGUPyF8naTm22rz4V2c4Dvv/yDsALM4tQXjbRcM20UgV0IlZGNrCgpmVSm4dSVGds2Bk6hagyQXf47uhf27J0ApcsXWmBWQ1rarLgtBDmyx01r/9+LSNVe/8H4WIw+3GBjyC8ctpEI9bYO588o+CI3wgm7QNUwo7TPZE32zIsBFSaYCXUiA/gzmV39eIkm7QCePUBJcUo0uqv2uKRt18LxGv7W7PfCShkI21p7tBKxYuzRNmX30q0peMrjvw4y80bNXAyzbq9KKqABLAZWDT/Hf7aAT/qnpZ+KWfJpvc2oRhSQK3sMn6i5k78iJLrelrWHmocgPwDIWBaEZM5KAt+t/bDNsb8VmHya2+aeHLGo5QGVLiMKJC8S2ur6yqmbY0Vo0KKyNoIdTEAY3Rd9pFdo6y98CIppGQlMXqr+NxJoQ6Rho2zA8UV3QlEbEq3Y7GuMjdubLCtqgtmf2/uNW3zktywgmrd75Zpp0K3FEKvUgw/C231np63c6Ee2+bLFIU4XInirO20az+U5PfjZz7X14PlRgjg113uUK6TauxY9z/cvKlydlPuxMD4HVA=
