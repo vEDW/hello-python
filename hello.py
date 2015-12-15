@@ -24,14 +24,14 @@ print "start redis"
 
 #IF PWS :
 
-#rediscloud_service = json.loads(os.environ['VCAP_SERVICES'])['rediscloud'][0]
-#credentials = rediscloud_service['credentials']
-#r_server = redis.Redis(host=credentials['hostname'], port=credentials['port'], password=credentials['password'])
+rediscloud_service = json.loads(os.environ['VCAP_SERVICES'])['rediscloud'][0]
+credentials = rediscloud_service['credentials']
+r_server = redis.Redis(host=credentials['hostname'], port=credentials['port'], password=credentials['password'])
 
 #IF PCF on premises/vcloud
-rediscloud_service = json.loads(os.environ['VCAP_SERVICES'])['p-redis'][0]
-credentials = rediscloud_service['credentials']
-r_server = redis.Redis(host=credentials['host'], port=credentials['port'], password=credentials['password'])
+#rediscloud_service = json.loads(os.environ['VCAP_SERVICES'])['p-redis'][0]
+#credentials = rediscloud_service['credentials']
+#r_server = redis.Redis(host=credentials['host'], port=credentials['port'], password=credentials['password'])
 
 
 #import sendgrid
