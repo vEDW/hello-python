@@ -1,0 +1,9 @@
+---
+applications:
+- name: vedwtravis
+  memory: 128M
+  host: vedwtravis
+  instances : 1
+  buildpack: python_buildpack
+  services :
+    - vedwredis
