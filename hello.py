@@ -119,7 +119,7 @@ def hello():
 	<html>
 	<body bgcolor="{}">
 
-	<center><h1><font color="white">Welcome to Andreas !<br/>
+	<center><h1><font color="white">Welcome to vEDW demo !<br/>
 	</center>
 
 	<center><h1><font color="white">I'm GUID:<br/>
