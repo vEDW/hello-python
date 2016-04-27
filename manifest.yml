@@ -1,8 +1,8 @@
 ---
 applications:
-- name: vedwtravis
+- name: vedwdemo2
   memory: 128M
-  host: vedwtravis
+  host: vedwdemo
   instances : 1
   buildpack: python_buildpack
   services :

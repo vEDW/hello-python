@@ -64,6 +64,7 @@ GREEN = "#33CC33"
 
 COLOR = BLUE
 
+
 @app.route('/')
 
 def hello():
@@ -119,7 +120,7 @@ def hello():
 	<html>
 	<body bgcolor="{}">
 
-	<center><h1><font color="white">Welcome to PXS Demo !<br/>
+	<center><h1><font color="white">Welcome to GITHUB Demo !<br/>
 	</center>
 
 	<center><h1><font color="white">I'm GUID:<br/>
@@ -151,6 +152,19 @@ def hello():
 	</body>
 	</html>
 	""".format(COLOR,my_uuid,r_server.get('counter'),address,country,r_server.get(country),page_timestr)
+
+
+@app.route('/blue')
+def setblue():
+	global COLOR
+	COLOR = BLUE
+	return "switched to BLUE"
+
+@app.route('/green')
+def setgreen():
+	global COLOR
+	COLOR = GREEN
+	return "switched to GREEN"
 
 @app.errorhandler(404)
 def not_found(error):
