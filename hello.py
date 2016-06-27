@@ -120,7 +120,7 @@ def hello():
 	<html>
 	<body bgcolor="{}">
 
-	<center><h1><font color="white">Welcome to KBC Demo !<br/>
+	<center><h1><font color="white">Welcome to the New Proximus Demo !<br/>
 	</center>
 
 	<center><h1><font color="white">I'm GUID:<br/>
