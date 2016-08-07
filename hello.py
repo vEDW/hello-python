@@ -62,7 +62,7 @@ my_uuid = str(uuid.uuid1())
 BLUE = "#0099FF"
 GREEN = "#33CC33"
 
-COLOR = GREEN
+COLOR = BLUE
 
 
 @app.route('/')
@@ -120,7 +120,7 @@ def hello():
 	<html>
 	<body bgcolor="{}">
 
-	<center><h1><font color="white">Welcome to the NEW VRT Demo !<br/>
+	<center><h1><font color="white">Welcome to the Demo !<br/>
 	</center>
 
 	<center><h1><font color="white">I'm GUID:<br/>
