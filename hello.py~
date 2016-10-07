@@ -63,7 +63,7 @@ BLUE = "#0099FF"
 GREEN = "#33CC33"
 
 COLOR = BLUE
- 
+
 
 @app.route('/')
 
