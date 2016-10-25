@@ -63,7 +63,7 @@ BLUE = "#0099FF"
 GREEN = "#33CC33"
 
 COLOR = BLUE
- 
+
 
 @app.route('/')
 
@@ -120,7 +120,7 @@ def hello():
 	<html>
 	<body bgcolor="{}">
 
-	<center><h1><font color="white">Welcome to the GREEEN Demo !<br/>
+	<center><h1><font color="white">Welcome to the CI Demo !<br/>
 	</center>
 
 	<center><h1><font color="white">I'm GUID:<br/>
