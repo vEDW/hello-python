@@ -5,5 +5,5 @@ applications:
   host: vedwdemo
   instances : 1
   buildpack: python_buildpack
-  services :
-    - vedwredis
+#  services :
+#    - vedwredis

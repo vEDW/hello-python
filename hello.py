@@ -1,6 +1,6 @@
 import os
 import uuid
-import redis
+#import redis
 import json
 import requests
 import time
@@ -15,9 +15,9 @@ print "start redis"
 
 #IF PWS :
 
-rediscloud_service = json.loads(os.environ['VCAP_SERVICES'])['rediscloud'][0]
-credentials = rediscloud_service['credentials']
-r_server = redis.Redis(host=credentials['hostname'], port=credentials['port'], password=credentials['password'])
+# rediscloud_service = json.loads(os.environ['VCAP_SERVICES'])['rediscloud'][0]
+# credentials = rediscloud_service['credentials']
+# r_server = redis.Redis(host=credentials['hostname'], port=credentials['port'], password=credentials['password'])
 
 #IF PCF on premises/vcloud
 #rediscloud_service = json.loads(os.environ['VCAP_SERVICES'])['p-redis'][0]
@@ -38,13 +38,20 @@ GREEN = "#33CC33"
 
 COLOR = BLUE
 
+def shutdown_server():
+    func = request.environ.get('werkzeug.server.shutdown')
+    if func is None:
+        raise RuntimeError('Not running with the Werkzeug Server')
+    func()
+
+
 @app.route('/')
 
 def hello():
 	print "start hello"
 	hello_starttime = time.time()
 	global r_server
-	r_server.incr('counter')
+	#r_server.incr('counter')
 	if request.headers.getlist("X-Forwarded-For"):
 		ipaddress = request.headers.getlist("X-Forwarded-For")[0]
 		print "X-Forwarded-For : " + ipaddress
@@ -68,7 +75,7 @@ def hello():
 	country = country_json.get(country)
 	print country
 
-	r_server.incr(country)
+	#r_server.incr(country)
 	page_time = time.time() - hello_starttime
 	page_timestr = "--- %s seconds ---" % page_time
 
@@ -82,7 +89,7 @@ def hello():
 	<html>
 	<body bgcolor="{}">
 
-	<center><h1><font color="white">Welcome to the Travis Demo !<br/>
+	<center><h1><font color="white">Welcome to the Demo for Sarah !<br/>
 	</center>
 
 	<center><h1><font color="white">I'm GUID:<br/>
@@ -117,8 +124,9 @@ def hello():
 
 	</body>
 	</html>
-	""".format(COLOR,my_uuid,my_index,r_server.get('counter'),address,country,r_server.get(country),page_timestr)
+	""".format(COLOR,my_uuid,my_index,'1',address,country,'1',page_timestr)
 
+#	""".format(COLOR,my_uuid,my_index,r_server.get('counter'),address,country,r_server.get(country),page_timestr)
 
 @app.route('/blue')
 def setblue():
@@ -131,6 +139,11 @@ def setgreen():
 	global COLOR
 	COLOR = GREEN
 	return "switched to GREEN"
+
+@app.route('/shutdown')
+def shutdown():
+    shutdown_server()
+    return 'Server shutting down...'
 
 @app.errorhandler(404)
 def not_found(error):
