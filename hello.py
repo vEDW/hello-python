@@ -89,7 +89,7 @@ def hello():
 	<html>
 	<body bgcolor="{}">
 
-	<center><h1><font color="white">Welcome to Live Demo !<br/>
+	<center><h1><font color="white">Welcome to My Great Demo !<br/>
 	</center>
 
 
