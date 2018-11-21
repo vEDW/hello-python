@@ -1,8 +1,8 @@
 ---
 applications:
-- name: greatdemo
+- name: vedwdemo
   memory: 128M
-  host: greatdemo
+  host: vedwdemo
   instances : 1
   buildpack: python_buildpack
 #  services :
