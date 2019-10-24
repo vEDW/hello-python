@@ -24,12 +24,12 @@ resources:
     file: version
     private_key: {{git-private-key}}
 
-- name: scanme-docker-image
+- name: hello-python-docker-image
   type: docker-image
   source:
     username: {{docker-hub-username}}
     password: {{docker-hub-password}}
-    repository: {{docker-scanme-image}}
+    repository: {{docker-hello-python-image}}
 
 - name: cf-dev
   type: cf
@@ -45,10 +45,10 @@ resources:
   type: kubernetes
   source:
     kubeconfig: {{kubeconfig-cloudpks}}
-    namespace: scanme
+    namespace: demo
 
 jobs:
-- name: scanme-build-docker-image
+- name: hello-python-build-docker-image
   public: true
   serial: true
   plan:
@@ -56,7 +56,7 @@ jobs:
     params: {bump: minor}
   - get: git-repo
     trigger: true
-  - put: scanme-docker-image
+  - put: hello-python-docker-image
     params: {build: git-repo,tag_file: version/number,dockerfile: git-repo/Dockerfile}
   - put: version
     params: {file: version/version}
@@ -74,9 +74,9 @@ jobs:
 - name: kubernetes-deploy-cloudpks
   plan:
   - get: git-repo
-  - get: scanme-docker-image
+  - get: hello-python-docker-image
     trigger: false
-    passed: [scanme-build-docker-image]
+    passed: [hello-python-build-docker-image]
   - put: kubernetes-cloudpks
     params:
       kubectl: apply -f git-repo/k8s/hello-python-deployment.yaml
