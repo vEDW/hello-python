@@ -57,7 +57,7 @@ jobs:
   - get: git-repo
     trigger: true
   - put: hello-python-docker-image
-    params: {build: git-repo,tag_file: version/number,dockerfile: git-repo/Dockerfile}
+    params: {build: git-repo,tag_file: version/number,dockerfile: git-repo/dockerfile}
   - put: version
     params: {file: version/version}
 
