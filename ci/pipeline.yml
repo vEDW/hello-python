@@ -1,16 +1,82 @@
 ---
+resource_types:
+- name: kubernetes
+  type: docker-image
+  source:
+    repository: zlabjp/kubernetes-resource
+    tag: "1.14"
+
+resources:
+- name: git-repo
+  type: git
+  source:
+    uri: git@github.com:vEDW/hello-python.git
+    branch: master
+    private_key: {{git-private-key}}
+
+- name: version
+  type: semver
+  source:
+    driver: git
+    initial_version: 0.0.1
+    uri: git@github.com:vEDW/scanme.git
+    branch: version
+    file: version
+    private_key: {{git-private-key}}
+
+- name: scanme-docker-image
+  type: docker-image
+  source:
+    username: {{docker-hub-username}}
+    password: {{docker-hub-password}}
+    repository: {{docker-scanme-image}}
+
+- name: cf-dev
+  type: cf
+  source:
+      api: {{cf-api-server}}
+      username: {{cf-username}}
+      password: {{cf-password}}
+      organization: {{cf-org}}
+      space: {{cf-space}}
+      skip_cert_check: false
+
+- name: kubernetes-cloudpks
+  type: kubernetes
+  source:
+    kubeconfig: {{kubeconfig-cloudpks}}
+    namespace: scanme
+
 jobs:
-- name: job-hello-world
+- name: scanme-build-docker-image
   public: true
+  serial: true
   plan:
-  - task:
-    config:
-      platform: linux
-      image_resource: 
-        type: docker-image
-        source: {repository: busybox}
-      run:
-        path: echo
-        args: [hello-world]
+  - get: version
+    params: {bump: minor}
+  - get: git-repo
+    trigger: true
+  - put: scanme-docker-image
+    params: {build: git-repo,tag_file: version/number,dockerfile: git-repo/scanme-frontend/Dockerfile}
+  - put: version
+    params: {file: version/version}
 
+- name: deploy-to-CF
+  build_logs_to_retain: 30
+  plan:
+      - get: git-repo
+        trigger: false
+      - put: cf-dev
+        params:
+          manifest: git-repo/scanme-frontend/manifest.yml
+          path: git-repo/scanme-frontend
 
+- name: kubernetes-deploy-cloudpks
+  plan:
+  - get: git-repo
+  - get: scanme-docker-image
+    trigger: false
+    passed: [scanme-build-docker-image]
+  - put: kubernetes-cloudpks
+    params:
+      kubectl: apply -f git-repo/scanme-k8s-deployment.yaml
