@@ -19,7 +19,7 @@ resources:
   source:
     driver: git
     initial_version: 0.0.1
-    uri: git@github.com:vEDW/scanme.git
+    uri: git@github.com:vEDW/hello-python.git
     branch: version
     file: version
     private_key: {{git-private-key}}
@@ -57,7 +57,7 @@ jobs:
   - get: git-repo
     trigger: true
   - put: scanme-docker-image
-    params: {build: git-repo,tag_file: version/number,dockerfile: git-repo/scanme-frontend/Dockerfile}
+    params: {build: git-repo,tag_file: version/number,dockerfile: git-repo/Dockerfile}
   - put: version
     params: {file: version/version}
 
@@ -68,8 +68,8 @@ jobs:
         trigger: false
       - put: cf-dev
         params:
-          manifest: git-repo/scanme-frontend/manifest.yml
-          path: git-repo/scanme-frontend
+          manifest: git-repo/manifest.yml
+          path: git-repo
 
 - name: kubernetes-deploy-cloudpks
   plan:
@@ -79,4 +79,4 @@ jobs:
     passed: [scanme-build-docker-image]
   - put: kubernetes-cloudpks
     params:
-      kubectl: apply -f git-repo/scanme-k8s-deployment.yaml
+      kubectl: apply -f git-repo/k8s/hello-python-deployment.yaml
