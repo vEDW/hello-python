@@ -9,9 +9,9 @@ from flask import Flask
 from flask import request
 from flask import jsonify
 
-print "start vedw"
+print ("start vedw")
 
-print "start redis"
+#print ("start redis")
 
 #IF PWS :
 
@@ -44,52 +44,56 @@ def shutdown_server():
         raise RuntimeError('Not running with the Werkzeug Server')
     func()
 
+def getipaddress():
+	#global r_server
+	#r_server.incr('counter')
+	if request.headers.getlist("X-Forwarded-For"):
+		ipaddress = request.headers.getlist("X-Forwarded-For")[0]
+		print ("X-Forwarded-For : " + ipaddress)
+		print (type(ipaddress))
+		idx=str(ipaddress).index(',')
+		address = ipaddress[0:idx]
+		print (address)
+	else:
+		ipaddress = request.remote_addr
+		address = ipaddress[0]
+
+	print ("requesting ipinfo.io")
+	print (address)
+	start_time = time.time()
+	responseJson = requests.get('http://ipinfo.io/' + address + "/json").json()
+	print (responseJson)
+	exec_time = time.time() - start_time
+	exec_timestr = "ipinfo.io --- %s seconds ---" % exec_time
+	print (exec_timestr)
+
+	country = responseJson.get("country")
+	print (country)
+	country = country_json.get(country)
+	print (country)
+	#r_server.incr(country)
 
 @app.route('/')
 
 def hello():
-	print "start hello"
+	print ("start hello")
 	hello_starttime = time.time()
-	global r_server
-	#r_server.incr('counter')
-	if request.headers.getlist("X-Forwarded-For"):
-		ipaddress = request.headers.getlist("X-Forwarded-For")[0]
-		print "X-Forwarded-For : " + ipaddress
-		print type(ipaddress)
-		idx=str(ipaddress).index(',')
-		address = ipaddress[0:idx]
-		print address
-	else:
-   		ipaddress = request.remote_addr
 
-	print "requesting ipinfo.io"
-	start_time = time.time()
-	responseJson = requests.get('http://ipinfo.io/' + address + "/json").json()
-	print responseJson
-	exec_time = time.time() - start_time
-	exec_timestr = "ipinfo.io --- %s seconds ---" % exec_time
-	print exec_timestr
-
-	country = responseJson.get("country")
-	print country
-	country = country_json.get(country)
-	print country
-
-	#r_server.incr(country)
 	page_time = time.time() - hello_starttime
 	page_timestr = "--- %s seconds ---" % page_time
 
 	now = time.ctime(int(time.time()))
- 	print("the now time is ") + str(now)
+	print("the now time is " + str(now))
 
-	pagebody = str(now) + " " + address + " " + country
+	pagebody = str(now)
+	hostname = os.uname()[1]
 
 	return """
 
 	<html>
 	<body bgcolor="{}">
 
-	<center><h1><font color="white">Welcome to Steven !<br/>
+	<center><h1><font color="white">Welcome to Arnaud !<br/>
 	</center>
 
 
@@ -97,35 +101,21 @@ def hello():
 	{}
 	</center>
 
+	<center><h1><font color="white">I'm host:<br/>
+	{}
+	</center>
+
 	<center><h1><font color="white">I'm Index:<br/>
 	{}
 	</center>
-
-	<center><h1><font color="white">Hits count:<br/>
-	{}
-	</center>
-
-	<center><h1><font color="white">Your IP :<br/>
-	{}
-	</center>
-
-	<center><h1><font color="white">Your Country :<br/>
-	{}
-	</center>
-
-	<center><h1><font color="white">Hits for your Country :<br/>
-	{}
-	</center>
-
 
 	<center><h1><font color="white">Page processing time :<br/>
 	{}
 	</center>
 
-
 	</body>
 	</html>
-	""".format(COLOR,my_uuid,my_index,'1',address,country,'1',page_timestr)
+	""".format(COLOR,my_uuid,hostname,my_index,page_timestr)
 
 #	""".format(COLOR,my_uuid,my_index,r_server.get('counter'),address,country,r_server.get(country),page_timestr)
 
