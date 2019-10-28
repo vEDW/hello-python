@@ -74,9 +74,10 @@ jobs:
 - name: kubernetes-deploy-cloudpks
   plan:
   - get: git-repo
+    passed: [hello-python-build-docker-image]
   - get: hello-python-docker-image
     trigger: false
-    passed: [hello-python-build-docker-image]
+
   - put: kubernetes-cloudpks
     params:
       kubectl: apply -f git-repo/k8s/hello-python-deployment.yaml

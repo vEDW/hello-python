@@ -29,6 +29,7 @@ spec:
       containers:
       - name: frontend
         image: 'ericdewitte/hello-python:latest'
+        imagePullPolicy: Always
         ports:
         - containerPort: 5000
           name: hello-python
