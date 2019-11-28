@@ -36,7 +36,7 @@ my_index = os.getenv('CF_INSTANCE_INDEX')
 BLUE = "#0099FF"
 GREEN = "#33CC33"
 
-COLOR = BLUE
+COLOR = GREEN
 
 def shutdown_server():
     func = request.environ.get('werkzeug.server.shutdown')
@@ -93,7 +93,7 @@ def hello():
 	<html>
 	<body bgcolor="{}">
 
-	<center><h1><font color="white">Welcome to my demo app !<br/>
+	<center><h1><font color="white">Welcome to CI/CD !<br/>
 	</center>
 
 

@@ -3,7 +3,7 @@ applications:
 - name: vedwdemo
   memory: 128M
   host: vedwdemo
-  instances : 1
+  instances : 5
   buildpack: python_buildpack
 #  services :
 #    - vedwredis
