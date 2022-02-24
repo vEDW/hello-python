@@ -13,7 +13,7 @@ spec:
     app: hello-python
   type: LoadBalancer
 ---
-apiVersion: apps/v1beta1  
+apiVersion: apps/v1  
 kind: Deployment
 metadata:
   name: frontend
@@ -21,6 +21,9 @@ metadata:
     app: hello-python
 spec:
   replicas: 2
+  selector:
+    matchLabels:
+      app: hello-python
   template:
     metadata:
       labels:

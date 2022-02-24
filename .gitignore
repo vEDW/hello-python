@@ -111,3 +111,6 @@ settings.json
 
 #concourse
 credentials.yml
+
+#macos
+.DS_Store

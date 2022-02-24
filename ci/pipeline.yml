@@ -5,6 +5,11 @@ resource_types:
   source:
     repository: zlabjp/kubernetes-resource
     tag: "1.14"
+- name: harbor-scan
+  type: docker-image
+  source:
+    repository: warroyo90/harbor-scan-resource
+    tag: 1.0.0
 
 resources:
 - name: git-repo
@@ -31,6 +36,13 @@ resources:
     password: {{docker-hub-password}}
     repository: {{docker-hello-python-image}}
 
+- name: scan
+  type: harbor-scan
+  source:
+    username: {{harbor_username}}
+    password: {{harbor_password}}
+    harbor_host: {{harbor_host_url}}
+    
 - name: cf-dev
   type: cf
   source:
@@ -41,10 +53,10 @@ resources:
       space: {{cf-space}}
       skip_cert_check: false
 
-- name: kubernetes-cloudpks
+- name: kubernetes-aks
   type: kubernetes
   source:
-    kubeconfig: {{kubeconfig-cloudpks}}
+    kubeconfig: {{kubeconfig-aks}}
     namespace: demo
 
 jobs:
@@ -71,13 +83,13 @@ jobs:
           manifest: git-repo/manifest.yml
           path: git-repo
 
-- name: kubernetes-deploy-cloudpks
+- name: kubernetes-deploy-aks
   plan:
   - get: git-repo
     passed: [hello-python-build-docker-image]
   - get: hello-python-docker-image
     trigger: false
 
-  - put: kubernetes-cloudpks
+  - put: kubernetes-aks
     params:
       kubectl: apply -f git-repo/k8s/hello-python-deployment.yaml
