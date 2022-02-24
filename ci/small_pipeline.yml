@@ -32,7 +32,7 @@ jobs:
   build_logs_to_retain: 30
   plan:
       - get: git-repo
-        trigger: false
+        trigger: true
       - put: cf-dev
         params:
           manifest: git-repo/manifest.yml
