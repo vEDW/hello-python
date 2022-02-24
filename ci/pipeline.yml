@@ -5,6 +5,7 @@ resource_types:
   source:
     repository: zlabjp/kubernetes-resource
     tag: "1.14"
+
 - name: harbor-scan
   type: docker-image
   source:
@@ -50,14 +51,24 @@ resources:
       username: {{cf-username}}
       password: {{cf-password}}
       organization: {{cf-org}}
-      space: {{cf-space}}
+      space: {{cf-space-dev}}
+      skip_cert_check: false
+    
+- name: cf-prod
+  type: cf
+  source:
+      api: {{cf-api-server}}
+      username: {{cf-username}}
+      password: {{cf-password}}
+      organization: {{cf-org}}
+      space: {{cf-space-prod}}
       skip_cert_check: false
 
 - name: kubernetes-aks
   type: kubernetes
   source:
     kubeconfig: {{kubeconfig-aks}}
-    namespace: demo
+    namespace: hello-python
 
 jobs:
 - name: hello-python-build-docker-image
@@ -72,6 +83,14 @@ jobs:
     params: {build: git-repo,tag_file: version/number,tag_as_latest: true,dockerfile: git-repo/dockerfile}
   - put: version
     params: {file: version/version}
+
+  - name: scan-image
+    plan:
+      - put: scan
+        params:
+          repository: {{harbor_repository}}
+          harbor_scan_thresholds: [{"severity": 4,"count": 10},{"severity": 5,"count": 1}]
+          tag: 3.8
 
 - name: deploy-to-CF
   build_logs_to_retain: 30
