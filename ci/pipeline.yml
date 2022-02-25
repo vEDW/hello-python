@@ -84,20 +84,33 @@ jobs:
   - put: version
     params: {file: version/version}
 
-  - name: scan-image
-    plan:
-      - put: scan
-        params:
-          repository: {{harbor_repository}}
-          harbor_scan_thresholds: [{"severity": 4,"count": 10},{"severity": 5,"count": 1}]
-          tag: 3.8
+- name: scan-image
+  plan:
+    - get: git-repo
+      passed: [hello-python-build-docker-image]
+    - put: scan
+      params:
+        repository: {{harbor_repository}}
+        harbor_scan_thresholds: [{"severity": 4,"count": 10},{"severity": 5,"count": 1}]
+        tag: 3.8
 
-- name: deploy-to-CF
+- name: deploy-to-cf-dev
+  build_logs_to_retain: 30
+  plan:
+      - get: git-repo
+        trigger: true
+      - put: cf-dev
+        params:
+          manifest: git-repo/manifest.yml
+          path: git-repo
+
+- name: deploy-to-cf-prod
   build_logs_to_retain: 30
   plan:
       - get: git-repo
         trigger: false
-      - put: cf-dev
+        passed: [deploy-to-cf-dev]
+      - put: cf-prod
         params:
           manifest: git-repo/manifest.yml
           path: git-repo

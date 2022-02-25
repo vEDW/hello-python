@@ -6,7 +6,6 @@ resources:
     uri: git@github.com:vEDW/hello-python.git
     branch: master
     private_key: {{git-private-key}}
-    private_key_passphrase: {{git-private-key-passphrase}}
     
 - name: cf-dev
   type: cf
@@ -34,6 +33,15 @@ jobs:
   plan:
       - get: git-repo
         trigger: true
+      - task: get-current-app-color
+        file: ci/tasks/current-app-get-info.yml
+        params:
+          PWS_APP_SUFFIX: {{cf-app-suffix}}
+          PWS_API: {{cf-api-server}}
+          PWS_ORG: {{cf-org}}
+          PWS_USER: {{cf-username}}
+          PWS_PWD: {{cf-password}}
+          PWS_SPACE: {{cf-space-dev}}
       - put: cf-dev
         params:
           manifest: git-repo/manifest.yml
