@@ -6,6 +6,7 @@ resources:
     uri: git@github.com:vEDW/hello-python.git
     branch: master
     private_key: {{git-private-key}}
+    private_key_passphrase: {{git-private-key-passphrase}}
     
 - name: cf-dev
   type: cf
