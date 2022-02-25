@@ -8,11 +8,11 @@ image_resource:
     tag: "latest"
 
 inputs:
-- name: concourse-pipeline-samples
+- name: git-repo
 - name: current-app-info
 
 run:
-  path: concourse-pipeline-samples/pipelines/appdev/blue-green-app-deployment/ci/tasks/load-tests
+  path: git-repo/ci/tasks/load-tests
 
 params:
   PWS_APP_SUFFIX:
