@@ -14,4 +14,4 @@ outputs:
 - name: current-app-info
 
 run:
-  path: ci/tasks/current-app-get-info
+  path: git-repo/ci/tasks/current-app-get-info
