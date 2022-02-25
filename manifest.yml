@@ -1,8 +1,7 @@
 ---
 applications:
-- name: vedwdemo
+- name: APPNAME
   memory: 128M
-  host: vedwdemo
   instances : 1
   buildpack: python_buildpack
 #  services :
