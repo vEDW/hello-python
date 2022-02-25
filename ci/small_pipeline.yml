@@ -42,7 +42,6 @@ jobs:
           PWS_USER: {{cf-username}}
           PWS_PWD: {{cf-password}}
           PWS_SPACE: {{cf-space-dev}}
-
       - task: prepare-app-manifest
         file: git-repo/ci/tasks/app-manifest-prep.yml
         params:
@@ -52,6 +51,28 @@ jobs:
           manifest: app-manifest-output/manifest.yml
           path: git-repo
 
+- name: load-tests
+  serial: true
+  public: true
+  plan:
+  - get: git-repo
+    trigger: true
+    passed:
+      - deploy-to-cf-dev
+  - task: get-current-app-color
+    file: git-repo/ci/tasks/current-app-get-info.yml
+    params:
+        PWS_APP_SUFFIX: {{cf-app-suffix}}
+        PWS_API: {{cf-api-server}}
+        PWS_ORG: {{cf-org}}
+        PWS_USER: {{cf-username}}
+        PWS_PWD: {{cf-password}}
+        PWS_SPACE: {{cf-space-dev}}
+  - task: run-load-tests
+    file: git-repo/ci/tasks/load-tests.yml
+    params:
+      PWS_APP_SUFFIX: {{cf-app-suffix}}
+      PWS_APP_DOMAIN: {{cf-app-domain}}
 
 - name: deploy-to-cf-prod
   build_logs_to_retain: 30
