@@ -34,7 +34,7 @@ jobs:
       - get: git-repo
         trigger: true
       - task: get-current-app-color
-        file: ci/tasks/current-app-get-info.yml
+        file: git-repo/ci/tasks/current-app-get-info.yml
         params:
           PWS_APP_SUFFIX: {{cf-app-suffix}}
           PWS_API: {{cf-api-server}}
@@ -42,10 +42,16 @@ jobs:
           PWS_USER: {{cf-username}}
           PWS_PWD: {{cf-password}}
           PWS_SPACE: {{cf-space-dev}}
+
+      - task: prepare-app-manifest
+        file: git-repo/ci/tasks/app-manifest-prep.yml
+        params:
+          PWS_APP_SUFFIX: {{cf-app-suffix}}
       - put: cf-dev
         params:
-          manifest: git-repo/manifest.yml
+          manifest: app-manifest-output/manifest.yml
           path: git-repo
+
 
 - name: deploy-to-cf-prod
   build_logs_to_retain: 30

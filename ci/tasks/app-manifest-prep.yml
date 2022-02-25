@@ -9,18 +9,13 @@ image_resource:
 
 inputs:
 - name: git-repo
-
-outputs:
 - name: current-app-info
 
+outputs:
+- name: app-manifest-output
+
 run:
-  path: git-repo/ci/tasks/current-app-get-info
+  path: git-repo/ci/tasks/app-manifest-prep
 
 params:
   PWS_APP_SUFFIX:
-  PWS_API:
-  PWS_ORG:
-  PWS_USER:
-  PWS_PWD: 
-  PWS_SPACE:
-
