@@ -32,7 +32,7 @@ jobs:
   build_logs_to_retain: 30
   plan:
       - get: git-repo
-        trigger: true
+        trigger: false
       - task: get-current-app-color
         file: git-repo/ci/tasks/current-app-get-info.yml
         params:
@@ -56,7 +56,7 @@ jobs:
   public: true
   plan:
   - get: git-repo
-    trigger: true
+    trigger: false
     passed:
       - deploy-to-cf-dev
   - task: get-current-app-color
