@@ -36,7 +36,7 @@ my_index = os.getenv('CF_INSTANCE_INDEX')
 BLUE = "#0099FF"
 GREEN = "#33CC33"
 
-COLOR = GREEN
+COLOR = BLUE
 
 def shutdown_server():
     func = request.environ.get('werkzeug.server.shutdown')
