@@ -74,6 +74,34 @@ jobs:
       PWS_APP_SUFFIX: {{cf-app-suffix}}
       PWS_APP_DOMAIN: {{cf-app-domain}}
 
+- name: promote-new-version
+  serial: true
+  public: true
+  plan:
+  - get: git-repo
+    trigger: true
+    passed:
+      - load-tests
+  - task: get-current-app-color
+    file: git-repo/ci/tasks/current-app-get-info.yml
+    params:
+      PWS_APP_SUFFIX: {{cf-app-suffix}}
+      PWS_API: {{cf-api-server}}
+      PWS_ORG: {{cf-org}}
+      PWS_USER: {{cf-username}}
+      PWS_PWD: {{cf-password}}
+      PWS_SPACE: {{cf-space-dev}}
+  - task: switch-app-routes
+    file: git-repo/ci/tasks/update-routes.yml
+    params:
+      PWS_APP_SUFFIX: {{cf-app-suffix}}
+      PWS_API: {{cf-api-server}}
+      PWS_ORG: {{cf-org}}
+      PWS_USER: {{cf-username}}
+      PWS_PWD: {{cf-password}}
+      PWS_SPACE: {{cf-space-dev}}
+      PWS_APP_DOMAIN: {{cf-app-domain}}
+
 - name: deploy-to-cf-prod
   build_logs_to_retain: 30
   plan:
