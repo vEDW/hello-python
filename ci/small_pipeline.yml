@@ -112,7 +112,7 @@ jobs:
       - task: get-current-app-color
         file: git-repo/ci/tasks/current-app-get-info.yml
         params:
-          PWS_APP_SUFFIX: {{cf-app-suffix}}
+          PWS_APP_SUFFIX: {{cf-app-suffix-prod}}
           PWS_API: {{cf-api-server}}
           PWS_ORG: {{cf-org}}
           PWS_USER: {{cf-username}}
