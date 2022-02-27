@@ -106,10 +106,51 @@ jobs:
   build_logs_to_retain: 30
   plan:
       - get: git-repo
-        trigger: false
+        trigger: true
         passed:
           - promote-new-version        
+      - task: get-current-app-color
+        file: git-repo/ci/tasks/current-app-get-info.yml
+        params:
+          PWS_APP_SUFFIX: {{cf-app-suffix}}
+          PWS_API: {{cf-api-server}}
+          PWS_ORG: {{cf-org}}
+          PWS_USER: {{cf-username}}
+          PWS_PWD: {{cf-password}}
+          PWS_SPACE: {{cf-space-dev}}
+      - task: prepare-app-manifest
+        file: git-repo/ci/tasks/app-manifest-prep.yml
+        params:
+          PWS_APP_SUFFIX: {{cf-app-suffix}}
       - put: cf-prod
         params:
-          manifest: git-repo/manifest.yml
+          manifest: app-manifest-output/manifest.yml
           path: git-repo
+
+- name: promote-new-version-to-prod
+  serial: true
+  public: true
+  plan:
+  - get: git-repo
+    trigger: true
+    passed:
+      - deploy-to-cf-prod
+  - task: get-current-app-color
+    file: git-repo/ci/tasks/current-app-get-info.yml
+    params:
+      PWS_APP_SUFFIX: {{cf-app-suffix-prod}}
+      PWS_API: {{cf-api-server}}
+      PWS_ORG: {{cf-org}}
+      PWS_USER: {{cf-username}}
+      PWS_PWD: {{cf-password}}
+      PWS_SPACE: {{cf-space-prod}}
+  - task: switch-app-routes
+    file: git-repo/ci/tasks/update-routes.yml
+    params:
+      PWS_APP_SUFFIX: {{cf-app-suffix-prod}}
+      PWS_API: {{cf-api-server}}
+      PWS_ORG: {{cf-org}}
+      PWS_USER: {{cf-username}}
+      PWS_PWD: {{cf-password}}
+      PWS_SPACE: {{cf-space-prod}}
+      PWS_APP_DOMAIN: {{cf-app-domain}}
