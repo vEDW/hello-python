@@ -121,7 +121,7 @@ jobs:
       - task: prepare-app-manifest
         file: git-repo/ci/tasks/app-manifest-prep.yml
         params:
-          PWS_APP_SUFFIX: {{cf-app-suffix}}
+          PWS_APP_SUFFIX: {{cf-app-suffix-prod}}
       - put: cf-prod
         params:
           manifest: app-manifest-output/manifest.yml
