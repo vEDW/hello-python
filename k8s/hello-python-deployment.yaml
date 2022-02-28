@@ -31,7 +31,7 @@ spec:
     spec:
       containers:
       - name: frontend
-        image: 'ericdewitte/hello-python:latest'
+        image: 'registry.tanzu.vedw.eu/demo/hello-python:latest'
         imagePullPolicy: Always
         ports:
         - containerPort: 5000

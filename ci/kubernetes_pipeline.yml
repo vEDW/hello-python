@@ -1,0 +1,61 @@
+---
+resource_types:
+- name: kubernetes
+  type: docker-image
+  source:
+    repository: zlabjp/kubernetes-resource
+    tag: "1.14"
+
+resources:
+- name: git-repo
+  type: git
+  source:
+    uri: git@github.com:vEDW/hello-python.git
+    branch: master
+    private_key: {{git-private-key}}
+
+- name: version
+  type: semver
+  source:
+    driver: git
+    initial_version: 0.0.1
+    uri: git@github.com:vEDW/hello-python.git
+    branch: version
+    file: version
+    private_key: {{git-private-key}}
+
+- name: hello-python-docker-image
+  type: docker-image
+  source:
+    username: {{docker-hub-username}}
+    password: {{docker-hub-password}}
+    repository: {{docker-hello-python-image}}
+ 
+- name: kubernetes-aks
+  type: kubernetes
+  source:
+    kubeconfig: {{kubeconfig-aks}}
+    namespace: hello-python
+
+
+jobs:
+- name: hello-python-build-docker-image
+  public: true
+  serial: true
+  plan:
+  - get: version
+    params: {bump: minor}
+  - get: git-repo
+    trigger: true
+  - put: hello-python-docker-image
+    params: {build: git-repo,tag_file: version/number,tag_as_latest: true,dockerfile: git-repo/dockerfile}
+  - put: version
+    params: {file: version/version}
+
+- name: kubernetes-deploy-aks
+  plan:
+  - get: git-repo
+    passed: [hello-python-build-docker-image]
+  - put: kubernetes-aks
+    params:
+      kubectl: apply -f git-repo/k8s/hello-python-deployment.yaml

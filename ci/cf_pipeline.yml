@@ -29,7 +29,8 @@ resources:
 
 jobs:
 - name: deploy-to-cf-dev
-  build_logs_to_retain: 30
+  build_log_retention:
+    builds: 30
   plan:
       - get: git-repo
         trigger: false
