@@ -30,10 +30,10 @@ resources:
 jobs:
 - name: deploy-to-cf-dev
   build_log_retention:
-    builds: 30
+    builds: 5
   plan:
       - get: git-repo
-        trigger: false
+        trigger: true
       - task: get-current-app-color
         file: git-repo/ci/tasks/current-app-get-info.yml
         params:
@@ -104,7 +104,8 @@ jobs:
       PWS_APP_DOMAIN: {{cf-app-domain}}
 
 - name: deploy-to-cf-prod
-  build_logs_to_retain: 30
+  build_log_retention:
+    builds: 5
   plan:
       - get: git-repo
         trigger: true

@@ -55,6 +55,7 @@ jobs:
 - name: kubernetes-deploy-aks
   plan:
   - get: git-repo
+    trigger: true
     passed: [hello-python-build-docker-image]
   - put: kubernetes-aks
     params:
