@@ -8,7 +8,7 @@ declare -A answers
 
 get_result() {
         #returns json
-        RESPONSE=$(curl -s -w '####%{response_code}' ${URL})
+        RESPONSE=$(curl -s -w '####%{response_code}' ${URL}  --connect-timeout 1)
         RESERROR=$?
         HTTPSTATUS=$(echo ${RESPONSE} |awk -F '####' '{print $2}')
         if [ $RESERROR = 7 ]; then
