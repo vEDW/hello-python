@@ -24,3 +24,7 @@ spec:
         env:
           - name: MESSAGE
             value: "DC01"
+          - name: MY_NODE_NAME
+            valueFrom:
+              fieldRef:
+                fieldPath: spec.nodeName

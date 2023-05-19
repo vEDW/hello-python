@@ -13,6 +13,7 @@ app = Flask(__name__)
 my_uuid = str(uuid.uuid1())
 
 MESSAGE = os.getenv('MESSAGE')
+MY_NODE_NAME = os.getenv('MY_NODE_NAME')
 
 print("Message : " + str(MESSAGE))
 
@@ -22,7 +23,7 @@ def shutdown_server():
 @app.route('/')
 def hello():
 	hostname = os.uname()[1]
-	returntext = hostname + " - " + str(MESSAGE)
+	returntext = hostname + " - " + str(MESSAGE) + " - " + str(MY_NODE_NAME)
 	print(request.remote_addr)
 	return returntext
 
