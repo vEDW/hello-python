@@ -29,7 +29,7 @@ get_result() {
 
 while true; do
     testresult=$(get_result)
-
+    echo ${testresult}
     if [[ ${answers[$testresult]} == "" ]]; then
         answers[$testresult]=1
     else
