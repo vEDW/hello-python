@@ -5,7 +5,7 @@ metadata:
   labels:
     app: hello-python
 spec:
-  replicas: 2
+  replicas: 3
   selector:
     matchLabels:
       app: hello-python
@@ -14,6 +14,16 @@ spec:
       labels:
         app: hello-python
     spec:
+      topologySpreadConstraints:
+          - maxSkew: 1
+            topologyKey: topology.tanzu.vmware.com/v1alpha1
+            whenUnsatisfiable: DoNotSchedule
+            labelSelector:
+              matchExpressions:
+                - key: app
+                  operator: In
+                  values:
+                    - hello-python
       containers:
       - name: frontend
         image: 'registry.cloud-garage.net/vedw/hello-python:latest'
