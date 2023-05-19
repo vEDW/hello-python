@@ -8,6 +8,5 @@ Jinja2
 MarkupSafe
 requests
 urllib3
-Werkzeug
 gunicorn
 gevent
