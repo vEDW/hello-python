@@ -9,9 +9,9 @@ declare -A answers
 get_result() {
         #returns json
         RESPONSE=$(curl -s -w '####%{response_code}' ${URL})
-        echo $?
+        RESERROR=$?
         HTTPSTATUS=$(echo ${RESPONSE} |awk -F '####' '{print $2}')
-        if [ $? = 7 ]; then
+        if [ $RESERROR = 7 ]; then
             echo "no answer"
             exit
         fi
