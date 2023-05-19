@@ -22,6 +22,9 @@ get_result() {
                 503)    
                         echo "Not Ready"
                         ;;
+                000)    
+                        echo "No Answer"
+                        ;;
                 *)      
                          echo ${RESPONSE} |awk -F '####' '{print $1}'
                         ;;
