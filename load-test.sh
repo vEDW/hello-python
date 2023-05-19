@@ -12,7 +12,7 @@ get_result() {
         RESERROR=$?
         HTTPSTATUS=$(echo ${RESPONSE} |awk -F '####' '{print $2}')
         if [ $RESERROR = 7 ]; then
-            echo "no answer"
+            echo "No Answer - curl error 7"
             exit
         fi
         case $HTTPSTATUS in
@@ -23,7 +23,7 @@ get_result() {
                         echo "Not Ready"
                         ;;
                 000)    
-                        echo "No Answer"
+                        echo "No Answer - Status 000"
                         ;;
                 *)      
                          echo ${RESPONSE} |awk -F '####' '{print $1}'
