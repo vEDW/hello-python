@@ -1,6 +1,8 @@
 #!/bin/bash
 
-URL="http://<ip or url>"
+#URL="http://<ip or url>"
+
+[ "${URL}" == "" ] && echo 'usage: export URL="http://<ip or url>"' && exit 1
 
 declare -A answers
 
@@ -8,22 +10,22 @@ get_result() {
         #returns json
         RESPONSE=$(curl -s -w '####%{response_code}' ${URL})
         HTTPSTATUS=$(echo ${RESPONSE} |awk -F '####' '{print $2}')
+        if [ $? = 7 ]; then
+            echo "no answer"
+            exit
+        fi
         case $HTTPSTATUS in
-
                 200)    
                         echo ${RESPONSE} |awk -F '####' '{print $1}'
                         ;;
-
                 503)    
                         echo "Not Ready"
                         ;;
                 *)      
                          echo ${RESPONSE} |awk -F '####' '{print $1}'
                         ;;
-
         esac
 }
-
 
 while true; do
     testresult=$(get_result)
