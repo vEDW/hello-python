@@ -1,0 +1,17 @@
+apiVersion: cni.tanzu.vmware.com/v1alpha1
+kind: AntreaConfig
+metadata:
+  name: wdc-2-tkc-cluster-1-antrea-package  # notice the naming-convention tkc cluster name-antrea-package
+  namespace: wdc-2-ns-1 # your vSphere Namespace the TKC cluster is in.
+spec:
+  antrea:
+    config:
+      featureGates:
+        AntreaProxy: true
+        EndpointSlice: false
+        AntreaPolicy: true
+        FlowExporter: false
+        Egress: true
+        NodePortLocal: true # Set this to true
+        AntreaTraceflow: true
+        NetworkPolicyStats: true
