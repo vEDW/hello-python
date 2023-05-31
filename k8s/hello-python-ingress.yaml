@@ -2,14 +2,14 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: ingress-hello-dc01
-  labels:    #### This is added for GSLB
-    app: gslb #### This is added for GSLB - Using the selector I chose in the value.yaml
+#  labels:    #### This is added for GSLB
+#    app: gslb #### This is added for GSLB - Using the selector I chose in the value.yaml
 #  annotations:
 #    ako.vmware.com/enable-tls: "true"
 spec:
   ingressClassName: avi-lb
   rules:
-    - host: hello.multi-az.cpod-casden.az-lhr.cloud-garage.net
+    - host: hello.cpod-sivt-dc01.az-lhr.cloud-garage.net
       http:
         paths:
         - path: /
