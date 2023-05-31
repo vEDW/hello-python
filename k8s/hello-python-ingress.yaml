@@ -9,7 +9,7 @@ metadata:
 spec:
   ingressClassName: avi-lb
   rules:
-    - host: hello.cpod-sivt-dc01.az-lhr.cloud-garage.net
+    - host: hello.k8s.cpod-sivt-dc01.az-lhr.cloud-garage.net
       http:
         paths:
         - path: /
