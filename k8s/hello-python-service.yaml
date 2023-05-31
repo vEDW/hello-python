@@ -11,4 +11,4 @@ spec:
       name: frontend
   selector:
     app: hello-python
-  
+  type: NodePortLocal
