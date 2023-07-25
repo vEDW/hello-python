@@ -27,6 +27,15 @@ def hello():
 	print(request.remote_addr)
 	return returntext
 
+@app.route('/whoami')
+def whoami():
+	returntext = "<br/>" + "REMOTE_ADDR=" + str(request.environ.get('REMOTE_ADDR')) + "\r\n"
+	returntext = returntext + "<br/>" + "HTTP_X_FORWARDED_FOR=" + str(request.environ.get('HTTP_X_FORWARDED_FOR')) + "\r\n"
+	returntext = returntext + "<br/>" + "X-Real-IP=" + str(request.environ.get('X-Real-IP')) + "\r\n"
+	print(returntext)
+	return returntext
+
+
 @app.route('/shutdown')
 def shutdown():
     shutdown_server()
@@ -42,4 +51,4 @@ def not_found(error):
 	return "500 - I failed !  :/ ", 500
 
 if __name__ == "__main__":
-	app.run(debug=False,host='0.0.0.0', port=int(os.getenv('PORT', '8000')))
+	app.run(debug=False,host='0.0.0.0', port=int(os.getenv('PORT', '5000')))
