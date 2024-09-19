@@ -14,29 +14,29 @@ spec:
       labels:
         app: hello-python
     spec:
-      affinity:
-        podAntiAffinity:
-          preferredDuringSchedulingIgnoredDuringExecution:
-            - labelSelector:
-                matchExpressions:
-                - key: app
-                  operator: In
-                  values:
-                  - hello-python
-              topologyKey: "kubernetes.io/hostname"
-      topologySpreadConstraints:
-        - maxSkew: 1
-          topologyKey: topology.kubernetes.io/zone
-          whenUnsatisfiable: DoNotSchedule
-          labelSelector:
-            matchExpressions:
-              - key: app
-                operator: In
-                values:
-                  - hello-python
+      # affinity:
+      #   podAntiAffinity:
+      #     preferredDuringSchedulingIgnoredDuringExecution:
+      #       - labelSelector:
+      #           matchExpressions:
+      #           - key: app
+      #             operator: In
+      #             values:
+      #             - hello-python
+      #         topologyKey: "kubernetes.io/hostname"
+      # topologySpreadConstraints:
+      #   - maxSkew: 1
+      #     topologyKey: topology.kubernetes.io/zone
+      #     whenUnsatisfiable: DoNotSchedule
+      #     labelSelector:
+      #       matchExpressions:
+      #         - key: app
+      #           operator: In
+      #           values:
+      #             - hello-python
       containers:
       - name: frontend
-        image: 'vedwcr.azurecr.io/hello-python:latest'
+        image: 'ericdewitte/hello-nkp:latest'
         imagePullPolicy: Always
         ports:
         - containerPort: 5000
