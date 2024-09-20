@@ -36,7 +36,7 @@ spec:
       #             - hello-python
       containers:
       - name: frontend
-        image: 'ericdewitte/hello-nkp:latest'
+        image: 'dockervedw/hello-nkp:latest'
         imagePullPolicy: Always
         ports:
         - containerPort: 5000
