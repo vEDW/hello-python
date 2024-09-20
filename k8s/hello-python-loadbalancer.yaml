@@ -11,4 +11,5 @@ spec:
       name: frontend
   selector:
     app: hello-python
+  externalTrafficPolicy: Local
   type: LoadBalancer

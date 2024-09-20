@@ -4,6 +4,7 @@ metadata:
   name: frontend
   labels:
     app: hello-python
+    app.kubernetes.io/version: 1.0
 spec:
   replicas: 4
   selector:
