@@ -7,13 +7,13 @@ metadata:
 #  annotations:
 #    ako.vmware.com/enable-tls: "true"
 spec:
-  #ingressClassName: avi-lb
+  ingressClassName: kommander-traefik
   rules:
-    - host: hello.k8s.cpod-sivt-dc01.az-lhr.cloud-garage.net
-      http:
+#    - host: hello.k8s.cpod-sivt-dc01.az-lhr.cloud-garage.net
+    - http:
         paths:
-        - path: /
-          pathType: Prefix
+        - path: /hello
+          pathType: ImplementationSpecific
           backend:
             service:
               name: frontend
