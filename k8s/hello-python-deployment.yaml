@@ -4,7 +4,6 @@ metadata:
   name: frontend
   labels:
     app: hello-python
-    app.kubernetes.io/version: 1.0
 spec:
   replicas: 4
   selector:
@@ -14,6 +13,7 @@ spec:
     metadata:
       labels:
         app: hello-python
+        version: "1.0"
     spec:
       # affinity:
       #   podAntiAffinity:
@@ -37,7 +37,7 @@ spec:
       #             - hello-python
       containers:
       - name: frontend
-        image: 'dockervedw/hello-nkp:latest'
+        image: 'ericdewitte/hello-nkp:latest'
         imagePullPolicy: Always
         ports:
         - containerPort: 5000
