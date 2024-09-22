@@ -15,16 +15,16 @@ spec:
         app: hello-python
         version: "1.0"
     spec:
-      affinity:
-        podAntiAffinity:
-          preferredDuringSchedulingIgnoredDuringExecution:
-            - labelSelector:
-                matchExpressions:
-                - key: app
-                  operator: In
-                  values:
-                  - hello-python
-              topologyKey: "kubernetes.io/hostname"
+      # affinity:
+      #   podAntiAffinity:
+      #     preferredDuringSchedulingIgnoredDuringExecution:
+      #       - labelSelector:
+      #           matchExpressions:
+      #           - key: app
+      #             operator: In
+      #             values:
+      #             - hello-python
+      #         topologyKey: "kubernetes.io/hostname"
       # topologySpreadConstraints:
       #   - maxSkew: 1
       #     topologyKey: topology.kubernetes.io/zone
