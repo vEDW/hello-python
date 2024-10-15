@@ -37,7 +37,7 @@ spec:
       #             - hello-python
       containers:
       - name: frontend
-        image: 'dockervedw/hello-nkp@sha256:35e3f8da585a748959ec92d6a945b532b6ed9d2f2c4190420068b5703f124836'
+        image: 'dockervedw/hello-nkp@sha256:ccaa43a8f47e7b7fc7c287b3e1bfea997c5390048dab5eb72a566e65a4b474b9'
         imagePullPolicy: Always
         resources:
           requests:
