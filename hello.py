@@ -35,6 +35,25 @@ def whoami():
 	print(returntext)
 	return returntext
 
+#example http://127.0.0.1:5000/fetch?url=https://example.com
+@app.route('/fetch')
+def fetch_url():
+    # Get the URL from query parameters
+    target_url = request.args.get('url')
+    
+    if not target_url:
+        return Response("Missing 'url' parameter", status=400)
+    
+    try:
+        # Make a GET request to the specified URL
+        response = requests.get(target_url)
+        
+        # Return the response content with the original status code and headers
+        return Response(response.content, status=response.status_code, headers=dict(response.headers))
+    
+    except requests.exceptions.RequestException as e:
+        return Response(f"Error fetching URL: {str(e)}", status=500)
+
 
 @app.route('/shutdown')
 def shutdown():
